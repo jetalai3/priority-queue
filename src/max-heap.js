@@ -17,11 +17,18 @@ class MaxHeap {
 	pop() {
 		if (!this.heapSize) return;
 		this.heapSize -= 1;
+		const returnRoot = this.root;
 		const detachedRoot = this.detachRoot();
+		this.restoreRootFromLastInsertedNode(detachedRoot);
+		
 		// this.detachRoot();
+		if (this.root) {
+			this.shiftNodeDown(this.root);
+		}
 		// this.shiftNodeDown(this.root);
-		// this.shiftNodeDown(this.root);
-		// return detachedRoot.data;
+		return detachedRoot.data;
+
+
 	}
 
 	detachRoot() {
@@ -120,10 +127,10 @@ class MaxHeap {
 			}
 			const nodeIndex = this.parentNodes.indexOf(node);
 			const nodeToSwapIndex = this.parentNodes.indexOf(nodeToSwap);
-			if (nodeIndex !== -1) {
-				if (nodeToSwapIndex !== -1) {
+			if (nodeToSwapIndex !== -1) {
+				if (nodeIndex !== -1) {
 					const tmpNode = this.parentNodes[nodeIndex];
-					this.parentNodes[nodeIndex] = node;
+					this.parentNodes[nodeIndex] = this.parentNodes[nodeToSwapIndex];
 					this.parentNodes[nodeToSwapIndex] = tmpNode;
 				} else {
 					this.parentNodes[nodeToSwapIndex] = node;
