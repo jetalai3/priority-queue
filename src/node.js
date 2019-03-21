@@ -40,49 +40,48 @@ class Node {
 	}
 
 	swapWithParent() {
-		if (!this.parent) {
-			return;
-		} else {
-			const right = this.right;
-			const left = this.left;
-			const parent = this.parent;
-			const parentLeft = this.parent.left;
-			const parentRight = this.parent.right;
-			const grandParent = this.parent.parent;
-
-			this.parent = grandParent;
-			parent.parent = this;
-			if (parent.left === this) {
-				this.left = parent;
-				this.right = parent.right;
-				parent.parent = this;
-				parent.left = left;
-				parent.right = right;
-				if (parentRight) {
-					parentRight.parent = this;
-				}
-				if (grandParent && grandParent.right === parent) {
-					grandParent.right = this;
-				} else if (grandParent && grandParent.left === parent) {
-					grandParent.left = this;
-				}
-			} else if (parent.right === this) {
-				this.right = parent;
-				this.left = parent.left;
-				parent.parent = this;
-				parent.left = left;
-				parent.right = right;
-				if (parentLeft) {
-					parentLeft.parent = this;
-				}
-				if (grandParent && grandParent.right === parent) {
-					grandParent.right = this;
-				} else if (grandParent && grandParent.left === parent) {
-					grandParent.left = this;
-				}
-			}
-		}
-	}
+	let tmpNode;
+    if (this.parent) {
+      if (this.left) {
+        this.left.parent = this.parent;
+      }
+      if (this.right) {
+        this.right.parent = this.parent;
+      }
+      if (this.parent.left === this) {
+        if (this.parent.right) {
+          this.parent.right.parent = this;
+        }
+        tmpNode = this.left;
+        this.left = this.parent;
+        this.parent.left = tmpNode;
+        tmpNode = this.right;
+        this.right = this.parent.right;
+        this.parent.right = tmpNode;
+      } else {
+        if (this.parent.left) {
+          this.parent.left.parent = this;
+        }
+        tmpNode = this.left;
+        this.left = this.parent.left;
+        this.parent.left = tmpNode;
+        tmpNode = this.right;
+        this.right = this.parent;
+        this.parent.right = tmpNode;
+      }
+      if (this.parent.parent) {
+        if (this.parent === this.parent.parent.left) {
+          this.parent.parent.left = this;
+        } else {
+          this.parent.parent.right = this;
+        }
+      }
+      tmpNode = this.parent.parent;
+      this.parent.parent = this;
+      this.parent = tmpNode;
+    }
+    return this;
+  }
 }
 
 module.exports = Node;
