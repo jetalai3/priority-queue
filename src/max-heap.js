@@ -18,15 +18,15 @@ class MaxHeap {
 		if (!this.heapSize) return;
 		this.heapSize -= 1;
 		const returnRoot = this.root;
-		const detachedRoot = this.detachRoot();
-		this.restoreRootFromLastInsertedNode(detachedRoot);
+		 const detachedRoot = this.detachRoot();
+		// this.restoreRootFromLastInsertedNode(detachedRoot);
 		
 		// this.detachRoot();
-		if (this.root) {
-			this.shiftNodeDown(this.root);
-		}
+		// if (this.root) {
+		// 	this.shiftNodeDown(this.root);
+		// }
 		// this.shiftNodeDown(this.root);
-		return detachedRoot.data;
+		// return detachedRoot.data;
 
 
 	}

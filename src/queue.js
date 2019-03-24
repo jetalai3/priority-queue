@@ -7,11 +7,17 @@ class PriorityQueue {
 	}
 
 	push(data, priority) {
-
+		if(this.heap.heapSize >= this.maxSize) { 
+			throw ("Error: the queue is full");
+		}
+		this.heap.push(data, priority);
 	}
 
 	shift() {
-
+		if(this.isEmpty()) {
+			 throw ("Error: the queue is empty");
+		}
+		this.heap.pop();
 	}
 
 	size() {
@@ -19,7 +25,7 @@ class PriorityQueue {
 	}
 
 	isEmpty() {
-		return this.heap.isEmpty();
+		return this.heap.heapSize === 0 ? true : false;
 	}
 }
 
